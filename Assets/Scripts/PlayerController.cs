@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private float acceleration;
     [SerializeField]
     private float brakeForce;
-    private float currentSpeed;
+    public float currentSpeed;
     private bool isStationary = true;
 
     private float nitroTimer;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField]
-    private float rotationSpeed = 90.0f;
+    private float rotationSpeed = 100.0f;
 
     void Awake()
     {
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
                 nitroIsCoolingDown = true;
             }
 
-            Debug.Log("nitro timer:" + nitroTimer);
+            // Debug.Log("nitro timer:" + nitroTimer);
         }
 
         if (!nitroIsActive && nitroIsCoolingDown)
@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour
                 nitroCooldown = 4.0f;
                 nitroIsCoolingDown = false;
             }
+
             //Debug.Log("Nitro cooldown: " + nitroCooldown);
         }
     }
