@@ -117,7 +117,6 @@ public class PlayerController : MonoBehaviour
         {
             h *= -1.0f;
         }
-
         Quaternion targetRotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y + h, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
