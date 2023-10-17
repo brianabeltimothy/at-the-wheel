@@ -1,14 +1,12 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
     private float maxSpeed;
-    [SerializeField]
     float horizontalSpeed;
-    [SerializeField]
     private float acceleration;
-    [SerializeField]
     private float brakeForce;
     public float currentSpeed;
     private bool isStationary = true;
@@ -23,8 +21,10 @@ public class PlayerController : MonoBehaviour
     private float gravityScale = 5.0f;
     private Rigidbody rb;
 
-    [SerializeField]
     private float rotationSpeed = 100.0f;
+
+    public TextMeshProUGUI nitroManager;
+    public GameObject tutorialText;
 
     void Awake()
     {
@@ -42,6 +42,17 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            tutorialText.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            restartGame();
+        }
+
+        nitroManager.text = "Nitro Available";
         //move the player
         moveForwardBackward();
 
@@ -56,7 +67,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
         {
             jump();
-            Debug.Log("is jumping");
         }
 
         //nitro
@@ -76,8 +86,7 @@ public class PlayerController : MonoBehaviour
                 deactivateNitro();
                 nitroIsCoolingDown = true;
             }
-
-            // Debug.Log("nitro timer:" + nitroTimer);
+            nitroManager.text = "Nitro is being used!";
         }
 
         if (!nitroIsActive && nitroIsCoolingDown)
@@ -89,9 +98,13 @@ public class PlayerController : MonoBehaviour
                 nitroCooldown = 4.0f;
                 nitroIsCoolingDown = false;
             }
-
-            //Debug.Log("Nitro cooldown: " + nitroCooldown);
+            nitroManager.text = "Nitro is cooling down...";
         }
+    }
+
+    public void restartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void jump()
@@ -106,7 +119,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
-            Debug.Log(isOnGround);
         }
     }
 
@@ -149,8 +161,6 @@ public class PlayerController : MonoBehaviour
     {
         acceleration += 40.0f;
         maxSpeed += 20.0f;
-
-        Debug.Log("Nitro is active");
     }
 
     void deactivateNitro()
@@ -159,7 +169,5 @@ public class PlayerController : MonoBehaviour
         maxSpeed -= 20.0f;
         nitroIsActive = false;
         nitroTimer = 3.0f;
-
-        Debug.Log("Nitro is deactivated");
     }
 }
