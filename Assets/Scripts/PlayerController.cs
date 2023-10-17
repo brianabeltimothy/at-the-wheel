@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private float gravityScale = 5.0f;
     private Rigidbody rb;
 
+    [SerializeField]
+    private float rotationSpeed = 90.0f;
 
     void Awake()
     {
@@ -116,10 +118,7 @@ public class PlayerController : MonoBehaviour
             h *= -1.0f;
         }
 
-        Quaternion targetRotation = Quaternion.Euler(0, h, 0);
-        float rotationSpeed = 5.0f;  // Adjust the speed to control the smoothness of the rotation.
-
-        // Use Quaternion.Slerp to interpolate between the current and target rotation.
+        Quaternion targetRotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y + h, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
@@ -163,5 +162,4 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("Nitro is deactivated");
     }
-
 }
