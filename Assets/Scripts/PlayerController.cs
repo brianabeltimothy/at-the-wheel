@@ -23,8 +23,9 @@ public class PlayerController : MonoBehaviour
 
     private float rotationSpeed = 100.0f;
 
-    public TextMeshProUGUI nitroManager;
-    public GameObject tutorialText;
+    private GameObject canvas;
+    public TextMeshProUGUI nitroText;
+    private GameObject tutorialText;
 
     void Awake()
     {
@@ -38,6 +39,9 @@ public class PlayerController : MonoBehaviour
         nitroCooldown = 4.0f;
 
         rb = GetComponent<Rigidbody>();
+
+        canvas = GameObject.FindGameObjectWithTag("Canvas");
+        tutorialText = GameObject.Find("TutorialText");
     }
 
     void FixedUpdate()
@@ -52,7 +56,7 @@ public class PlayerController : MonoBehaviour
             restartGame();
         }
 
-        nitroManager.text = "Nitro Available";
+        nitroText.text = "Nitro Available";
         //move the player
         moveForwardBackward();
 
@@ -86,7 +90,7 @@ public class PlayerController : MonoBehaviour
                 deactivateNitro();
                 nitroIsCoolingDown = true;
             }
-            nitroManager.text = "Nitro is being used!";
+            nitroText.text = "Nitro is being used!";
         }
 
         if (!nitroIsActive && nitroIsCoolingDown)
@@ -98,7 +102,7 @@ public class PlayerController : MonoBehaviour
                 nitroCooldown = 4.0f;
                 nitroIsCoolingDown = false;
             }
-            nitroManager.text = "Nitro is cooling down...";
+            nitroText.text = "Nitro is cooling down...";
         }
     }
 

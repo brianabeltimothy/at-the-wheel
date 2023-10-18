@@ -8,12 +8,12 @@ public class HudManager : MonoBehaviour
 
     void Start()
     {
-        speedDisplayer = GameObject.Find("Speedometer").GetComponent<TextMeshProUGUI>();
+        speedDisplayer = GameObject.Find("SpeedometerText").GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
     {
-        float playerSpeed = Mathf.Floor(playerControllerScript.currentSpeed) * 3;
+        float playerSpeed = Mathf.Round(playerControllerScript.currentSpeed) * 3;
 
         if (playerSpeed < 0)
         {
