@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    private Transform player;
-    private Vector3 offset;
+    private GameObject player;
+    private float cameraSpeed;
+    public GameObject cameraConstraint;
 
-    void Start()
+    void Awake()
     {
-        player = GameObject.FindWithTag("Player").transform;
-        offset = transform.position - player.position;
+        player = GameObject.FindGameObjectWithTag("Player");
+        cameraSpeed = 7.0f;
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
-        transform.position = player.position + offset;
+        follow();
+    }
+
+    private void follow()
+    {
+        transform.position = Vector3.Lerp(transform.position, cameraConstraint.transform.position, Time.deltaTime * cameraSpeed);
+        transform.LookAt(player.gameObject.transform.position);
     }
 }
